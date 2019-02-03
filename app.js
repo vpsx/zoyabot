@@ -2,6 +2,7 @@
 // Wow why is javascript so... :| 
 
 // TODO: Figure out how to write log files for spyware Kappa
+// TODO: Private repos are a thing now..!
 
 // NPM stuff
 const tmi = require('tmi.js')
@@ -14,6 +15,10 @@ const knowns = require('./knowns.js')
 
 // Timer
 const timer_url = "http://127.0.0.1:3000" //ho
+
+// Peredatchik
+const WebSocket = require('ws');
+const ws = new WebSocket("ws://127.0.0.1:8080");
 
 // Create a client with our options:
 let client = new tmi.client(config.return_options_object())
@@ -30,9 +35,23 @@ client.connect()
 // Kanaly
 let k0 = config.return_c0()
 
+// Some time and uptime stuff
+var stream_went_up_at = Date.now();
+var time_options = {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: '2-digit',
+  timeZoneName: 'short',
+  hourCycle: 'h24',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit'
+};
+
 // Fun 
 let commandPrefix = '!' //valid commands start with !
-let knownCommands = { echo, haiku, хайзоябот, мат, МАТ }
+let knownCommands = { echo, haiku, хайзоябот, мат, МАТ, kappa, каппа, pepega, пепега, xrr, хрр, kkkkkkkkkk, k, kk, kkk, kkkk, kkkkk, чикаго, chicago, время, time, up, uptime, ап, стримап }
 var knowns_map = new Map(knowns.return_knowns_pairs())
 var already_greeted_list = []
 var spyware_list_kappa = []
@@ -56,7 +75,7 @@ function onMessageHandler (target, context, msg, self) {
   if (msgstring) {
     if (!already_greeted_list.includes(context.username)) {
       console.log(`Sending greeting to ${context.username}`)
-      client.say("k0", msgstring)
+      client.say(k0, msgstring)
       already_greeted_list.push(context.username)
       //Could pull the @'s out of dict and program it in here, but 
       //for now I would rather have finer control over who gets @'d and who doesn't
@@ -91,7 +110,7 @@ function onMessageHandler (target, context, msg, self) {
 function onConnectedHandler (addr, port) {
   console.log(`* Connected to ${addr}:${port}`)
   client.color("BlueViolet") 
-  client.say("k0", "Я здесь я работаю всем хай")
+  client.say(k0, "Я здесь я работаю всем хай")
 }
 
 
@@ -140,7 +159,7 @@ function haiku (target, context) {
 }
 
 function хайзоябот (target, context) {
-  client.say("k0", "@" + context.username + " HeyGuys")
+  client.say(k0, "@" + context.username + " HeyGuys")
 }
 
 function МАТ (target, context) {
@@ -153,15 +172,89 @@ function мат (target, context) {
     //console.log('error:', error); 
     //console.log('statusCode:', response && response.statusCode);
     //console.log('body:', body);
-    client.say("k0", "SMOrc SMOrc МАТ!!! Время без мата было: " + body);
+    client.say(k0, "SMOrc SMOrc МАТ!!! Время без мата было: " + body);
   });
   request(timer_url + "/reset", function (error, response, body) {
     console.log("Hit timer RESET endpoint!")
     //console.log('error:', error);
     //console.log('statusCode:', response && response.statusCode);
     //console.log('body:', body);
-    client.say("k0", "Таймер обнулился Kappa"); 
+    client.say(k0, "Таймер обнулился Kappa");
   });
 }
 
+function kappa (target, context) {
+  ws.send('kappa');
+}
+function pepega (target, context) {
+  ws.send('pepega');
+}
+function xrr (target, context) {
+  ws.send('xrr');
+}
+function каппа (target, context) {
+  ws.send('kappa');
+}
+function пепега (target, context) {
+  ws.send('pepega');
+}
+function хрр (target, context) {
+  ws.send('xrr');
+}
+// Jesus
+function k (target, context) {
+  ws.send('xrr');
+}
+function kk (target, context) {
+  ws.send('xrr');
+}
+function kkk (target, context) {
+  ws.send('xrr');
+}
+function kkkk (target, context) {
+  ws.send('xrr');
+}
+function kkkkk (target, context) {
+  ws.send('xrr');
+}
+function kkkkkkkkkk (target, context) {
+  ws.send('xrr');
+}
+
+
+
+function чикаго (target, context) { время(target, context) }
+function время (target, context) {
+  var сейчас = new Date();
+  client.say(k0, "В Чикаго сейчас: " + сейчас.toLocaleDateString('ru-RU', time_options));
+}
+function chicago (target, context) { time(target, context) }
+function time (target, context) {
+  var сейчас = new Date();
+  client.say(k0, "Time in Chicago: " + сейчас.toLocaleDateString('en-GB', time_options));
+}
+// So actually these uptime functions are скорее bot up, чем stream up...
+// But Zoyabot never seems to crash, so this only breaks if I deliberately kill her
+function ап (target, context) { uptime(target, context) }
+function стримап (target, context) { uptime(target, context) }
+function up (target, context) { uptime(target, context) }
+function uptime (target, context) {
+  var сейчас = Date.now();
+  var elapsed_milliseconds = сейчас - stream_went_up_at;
+  client.say(k0, "Стрим ап: " + millisecs_to_sensible_string(elapsed_milliseconds));
+}
+
+function millisecs_to_sensible_string(ms) {
+
+  s = Math.floor(ms/1000)
+  secs = s % 60;
+  mins = Math.floor(s/60);
+  hrs = Math.floor(mins/60);
+  mins = mins % 60;
+
+  mins = mins < 10 ? "0" + mins : mins;
+  secs = secs < 10 ? "0" + secs : secs;
+
+  return hrs+":"+mins+":"+secs;
+}
 

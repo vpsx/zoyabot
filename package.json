@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "haikudos": "^1.0.7",
     "tmi.js": "^1.2.1"
   }
 }
