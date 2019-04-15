@@ -187,7 +187,7 @@ function мат (target, context) {
 function go (target, context, params) {
     // go l r speed duration
     for (i=0; i<4; i++) {
-        if (params[0] && isNaN(Number(params[0]))) {
+        if (params[i] && isNaN(Number(params[i]))) {
             client.say(k0, context.username +  ", Каво? Цифры нужны, братан");
             return
         }
