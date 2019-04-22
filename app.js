@@ -192,6 +192,7 @@ function go (target, context, params) {
             return
         }
     }
+    client.say(k0, context.username + " за рулём...");
     l = params[0] ? params[0] : 1
     r = params[1] ? params[1] : 1
     s = params[2] ? params[2] : 50
