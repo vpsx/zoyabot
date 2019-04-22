@@ -51,7 +51,7 @@ var time_options = {
 
 // Fun 
 let commandPrefix = '!' //valid commands start with !
-let knownCommands = { echo, haiku, хайзоябот, мат, МАТ, kappa, каппа, pepega, пепега, xrr, хрр, kkkkkkkkkk, k, kk, kkk, kkkk, kkkkk, чикаго, chicago, время, time, up, uptime, ап, стримап, go, го }
+let knownCommands = { echo, haiku, хайзоябот, мат, МАТ, kappa, каппа, pepega, пепега, xrr, хрр, kkkkkkkkkk, k, kk, kkk, kkkk, kkkkk, к, кк, ккк, кккк, ккккк, кккккккккк, чикаго, chicago, время, time, up, uptime, ап, стримап, go, го }
 var knowns_map = new Map(knowns.return_knowns_pairs())
 var already_greeted_list = []
 var spyware_list_kappa = []
@@ -241,6 +241,24 @@ function kkkkk (target, context) {
   ws.send('xrr');
 }
 function kkkkkkkkkk (target, context) {
+  ws.send('xrr');
+}
+function к (target, context) {
+  ws.send('xrr');
+}
+function кк (target, context) {
+  ws.send('xrr');
+}
+function ккк (target, context) {
+  ws.send('xrr');
+}
+function кккк (target, context) {
+  ws.send('xrr');
+}
+function ккккк (target, context) {
+  ws.send('xrr');
+}
+function кккккккккк (target, context) {
   ws.send('xrr');
 }
 
