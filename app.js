@@ -17,8 +17,9 @@ const timer_url = "http://127.0.0.1:3000" //ho
 const WebSocket = require('ws');
 const ws = new WebSocket("ws://127.0.0.1:8080");
 
-// Koleca
-const koleca_url = "http://192.168.1.5:5000"
+// Tostrero
+// NOTE: Changes with every router reset
+const tostrero_url = "http://192.168.1.4:5000"
 
 // Create a client with our options:
 let client = new tmi.client(config.return_options_object())
@@ -51,7 +52,20 @@ var time_options = {
 
 // Fun 
 let commandPrefix = '!' //valid commands start with !
-let knownCommands = { echo, haiku, хайзоябот, мат, МАТ, kappa, каппа, pepega, пепега, xrr, хрр, kkkkkkkkkk, k, kk, kkk, kkkk, kkkkk, к, кк, ккк, кккк, ккккк, кккккккккк, чикаго, chicago, время, time, up, uptime, ап, стримап, go, го }
+let knownCommands = {
+    echo, haiku,
+    хайзоябот,
+    мат, МАТ,
+    kappa, каппа,
+    pepega, пепега,
+    xrr, хрр, kkkkkkkkkk, k, kk, kkk, kkkk, kkkkk, к, кк, ккк, кккк, ккккк, кккккккккк,
+    чикаго, chicago,
+    время, time,
+    up, uptime, ап, стримап,
+    cleanup,
+    го, go,
+    смотри, look,
+}
 var knowns_map = new Map(knowns.return_knowns_pairs())
 var already_greeted_list = []
 var spyware_list_kappa = []
@@ -184,6 +198,15 @@ function мат (target, context) {
 }
 
 
+// undocumented; just gpio cleanup convenience
+function cleanup(target, context, params) {
+    argstring = `/cleanup`
+    request(tostrero_url + argstring, function (error, response, body) {
+        client.say(k0, body);
+    });
+}
+
+
 function go (target, context, params) {
     // go l r speed duration
     for (i=0; i<4; i++) {
@@ -198,12 +221,33 @@ function go (target, context, params) {
     s = params[2] ? params[2] : 50
     d = params[3] ? params[3] : 5
     argstring = `/go?l=${l}&r=${r}&speed=${s}&duration=${d}`
-  request(koleca_url + argstring, function (error, response, body) {
-    client.say(k0, "Погнали с " + context.username + " за рулём: " + body);
-  });
+    request(tostrero_url + argstring, function (error, response, body) {
+        client.say(k0, "Погнали с " + context.username + " за рулём: " + body);
+    });
 }
 function го (target, context, params) {
     go(target, context, params)
+}
+
+
+function look(target, context, params) {
+    // look height
+    if (params.length == 0) {
+        client.say(k0, context.username + ", пожалуйста, дай высоту с 0 до 10~");
+        return
+    }
+    if (isNaN(Number(params[0]))) {
+        client.say(k0, context.username +  ", Каво? Цифра нужна, братан");
+        return
+    }
+    h = params[0]
+    argstring = `/look?height=${h}`
+    request(tostrero_url + argstring, function (error, response, body) {
+        client.say(k0, body + "--установлены " + context.username);
+    });
+}
+function смотри(target, context, params) {
+    look(target, context, params)
 }
 
 
