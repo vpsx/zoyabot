@@ -63,7 +63,7 @@ let knownCommands = {
     время, time,
     up, uptime, ап, стримап,
     cleanup,
-    го, go,
+    го, go, то, to,
     смотри, look,
 }
 var knowns_map = new Map(knowns.return_knowns_pairs())
@@ -219,14 +219,44 @@ function go (target, context, params) {
     l = params[0] ? params[0] : 1
     r = params[1] ? params[1] : 1
     s = params[2] ? params[2] : 50
-    d = params[3] ? params[3] : 5
-    argstring = `/go?l=${l}&r=${r}&speed=${s}&duration=${d}`
+    d = params[3] ? params[3] : 3
+    argstring = `/go?l=${l}&r=${r}&lspeed=${s}&rspeed=${s}&duration=${d}`
     request(tostrero_url + argstring, function (error, response, body) {
         client.say(k0, "Погнали с " + context.username + " за рулём: " + body);
     });
 }
 function го (target, context, params) {
     go(target, context, params)
+}
+
+
+function to (target, context, params) {
+    // tfw u realize ur api говно :P вот лучше наверное
+    // !to l r duration
+    // where l/r is just left/right wheel speed and -ve means backwards
+    for(i=0; i<3; i++) {
+        if (params[i] && isNaN(Number(params[i]))) {
+            client.say(k0, context.username +  ", Каво? Цифры нужны, братан");
+            return
+        }
+    }
+    client.say(k0, context.username + " за рулём...");
+    // divide by own absolute value... wat is that in js :P Я В САМОЛЁТЕ БЛЯ
+    left = params[0] ? params[0] : 40
+    right = params[1] ? params[1] : left
+    duration = params[2] ? params[2] : 3
+    l = left/abs(left) //fix
+    r = right/abs(right) //fix
+    ls = abs(left)
+    rs = abs(right)
+    d = duration
+    argstring = `/go?l=${l}&r=${r}&lspeed=${ls}&rspeed=${rs}&duration=${d}`
+    request(tostrero_url + argstring, function (error, response, body) {
+        client.say(k0, "Погнали с " + context.username + " за рулём: " + body);
+    });
+}
+function то (target, context, params) {
+    to(target, context, params)
 }
 
 
