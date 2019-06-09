@@ -20,6 +20,7 @@ const ws = new WebSocket("ws://127.0.0.1:8080");
 // Tostrero
 // NOTE: Changes with every router reset
 const tostrero_url = "http://192.168.1.4:5000"
+//const tostrero_url = "http://10.0.0.178:5000" Dinvir
 
 // Create a client with our options:
 let client = new tmi.client(config.return_options_object())
