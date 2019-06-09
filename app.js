@@ -242,14 +242,13 @@ function to (target, context, params) {
         }
     }
     client.say(k0, context.username + " за рулём...");
-    // divide by own absolute value... wat is that in js :P Я В САМОЛЁТЕ БЛЯ
     left = params[0] ? params[0] : 40
     right = params[1] ? params[1] : left
     duration = params[2] ? params[2] : 3
-    l = left/abs(left) //fix
-    r = right/abs(right) //fix
-    ls = abs(left)
-    rs = abs(right)
+    l = left/Math.abs(left)
+    r = right/Math.abs(right)
+    ls = Math.abs(left)
+    rs = Math.abs(right)
     d = duration
     argstring = `/go?l=${l}&r=${r}&lspeed=${ls}&rspeed=${rs}&duration=${d}`
     request(tostrero_url + argstring, function (error, response, body) {
