@@ -242,14 +242,16 @@ function to (target, context, params) {
         }
     }
     client.say(k0, context.username + " за рулём...");
-    left = params[0] ? params[0] : 40
-    right = params[1] ? params[1] : left
-    duration = params[2] ? params[2] : 3
-    l = left/Math.abs(left)
-    r = right/Math.abs(right)
+    // WOWWW the js ternary operator is differently ordered than in python HAHAHA OOPS
+    // also need Number() bc divide. also this only works bc params[i] is string
+    left = params[0] ? Number(params[0]) : 40
+    right = params[1] ? Number(params[1]) : left
+    duration = params[2] ? Number(params[2]) : 3
+    l = left ? left/Math.abs(left) : 0
+    r = right ? right/Math.abs(right) : 0
     ls = Math.abs(left)
     rs = Math.abs(right)
-    d = duration
+    d = Math.abs(duration)
     argstring = `/go?l=${l}&r=${r}&lspeed=${ls}&rspeed=${rs}&duration=${d}`
     request(tostrero_url + argstring, function (error, response, body) {
         client.say(k0, "Погнали с " + context.username + " за рулём: " + body);
