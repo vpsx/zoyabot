@@ -212,8 +212,15 @@ function go (target, context, params) {
     // go l r speed duration
     for (i=0; i<4; i++) {
         if (params[i] && isNaN(Number(params[i]))) {
-            client.say(k0, context.username +  ", Каво? Цифры нужны, братан");
+            client.say(k0, context.username +  ", Каво? Цифры нужны, братан DarkMode");
             return
+        }
+        if (params[i] && i<2 && !Number.isInteger(Number(params[i]))) {
+            client.say(k0, context.username + ", Ну незнай шо делать с этими нецелыми числами, если в параметрах направления PepeHands");
+            return
+        }
+        if (params[i] && i==3 && Number(params[i])<0) {
+            client.say(k0, context.username + ", Отрицательная продолжительность WutFace ничего, исправлю TPFufun");
         }
     }
     client.say(k0, context.username + " за рулём...");
@@ -237,8 +244,11 @@ function to (target, context, params) {
     // where l/r is just left/right wheel speed and -ve means backwards
     for(i=0; i<3; i++) {
         if (params[i] && isNaN(Number(params[i]))) {
-            client.say(k0, context.username +  ", Каво? Цифры нужны, братан");
+            client.say(k0, context.username +  ", Каво? Цифры нужны, братан DarkMode");
             return
+        }
+        if (params[i] && i==2 && Number(params[i])<0) {
+            client.say(k0, context.username + ", Отрицательная продолжительность WutFace ничего, исправлю TPFufun");
         }
     }
     client.say(k0, context.username + " за рулём...");
